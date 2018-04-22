@@ -6,12 +6,7 @@ body {
 h1 {
   color: #006;
 }
-h2 {
-  color: #039;
-  border-bottom: 1px solid #039;
-  margin-top: 35px;
-  padding-top: 20px;
-}
+
 h3 {
   color: #03f;
   margin-top: 20px;
@@ -24,21 +19,38 @@ footer {
 }
 
 .block1 {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  padding-right:40px;
+  padding-top:10px;
+  padding-bottom:40px;
+  font-size:100%;
+}
+
+.block2 {
   background: white;
   margin-top: 20px;
   margin-left: 20px;
   margin-right: 20px;
   padding-left:40px;
   padding-right:40px;
-  padding-top:20px;
+  padding-top:10px;
   padding-bottom:40px;
   font-size:100%;
 }
 
-
 .news {
   font-family:'Bold';
+  border-bottom: 1px solid #039;
+  color: #006;
+  font-size:150%;
+}
+
+.news2 {
+  font-family:'Bold';
+  border-bottom: 1px solid #039;
   color: #FFCC66;
   font-size:150%;
-  padding-top:10px;
 }

@@ -3,6 +3,12 @@ body {
   background-color:#C0C0C0;
 }
 
+p {
+  font-family:'Lato', 'Noto Sans Japanese', '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+  font-size:100%;
+}
+
+
 h1 {
   color: #006;
 }
@@ -30,7 +36,7 @@ footer {
 }
 
 .block2 {
-  background: white;
+  background: #DDDDDD;
   margin-top: 20px;
   margin-left: 20px;
   margin-right: 20px;
@@ -49,7 +55,7 @@ footer {
 }
 
 .news2 {
-  font-family:'Bold';
+  font-family:'Lato', 'Noto Sans Japanese', '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
   border-bottom: 1px solid #039;
   color: #FFCC66;
   font-size:150%;

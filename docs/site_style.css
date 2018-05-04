@@ -37,13 +37,13 @@ footer {
 
 .block2 {
   background: #DDDDDD;
-  margin-top: 20px;
+  margin-top: 30px;
   margin-left: 20px;
-  margin-right: 20px;
+
   padding-left:40px;
   padding-right:40px;
-  padding-top:10px;
-  padding-bottom:40px;
+  padding-top:5px;
+  padding-bottom:20px;
   font-size:100%;
 }
 
@@ -55,8 +55,8 @@ footer {
 }
 
 .news2 {
-  font-family:'Lato', 'Noto Sans Japanese', '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
-  border-bottom: 1px solid #039;
-  color: #FFCC66;
+  font-family:'Bold";
+  color: #006;
   font-size:150%;
+  border-bottom: 1px solid #039;
 }

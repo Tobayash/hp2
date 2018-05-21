@@ -311,7 +311,69 @@ div.tocify {
 <style>
   @import url(https://fonts.googleapis.com/css?family=Lato:400,900);
 </style>
-<p>ここにメモを書き込んでいく予定です。</p>
+<style type="text/css">
+#TOC a {
+color: black;
+}
+
+.tocify .tocify-header {
+color: black;
+background: #222222;
+}
+
+.tocify .tocify-header .active {
+color: white;
+background: #333333;
+}
+
+.tocify .tocify-item {
+background: #222222;
+color: white;
+
+}
+
+</style>
+<p>ここにメモを残していく（自分用）。<br></p>
+<div id="ggplot" class="section level1">
+<h1>ggplot</h1>
+<ul>
+<li>ラピュタを無くすならscale_y_continuous(expand = c(0,0))を加える<br></li>
+<li>グラフの縦軸の指定は、たとえば０～１０にしたかったらcoord_cartesian(ylim=c(0,10))<br></li>
+</ul>
+</div>
+<div id="rmarkdown" class="section level1">
+<h1>Rmarkdown</h1>
+<div id="yaml" class="section level2">
+<h2>yamlヘッダ</h2>
+<ul>
+<li>Rmarkdownでドキュメントを作るときの全体設定<br></li>
+<li>改行やスペースが重要になるので注意<br> たとえば・・・ 　</li>
+</ul>
+<pre class="r"><code>---
+title: &quot;Memo&quot;
+output: html_document:
+  toc: true
+  toc_float: true
+---</code></pre>
+<p>　これだとエラーが出るし・・・</p>
+<pre class="r"><code>---
+title: &quot;Memo&quot;
+output: 
+  html_document:
+  toc: true
+  toc_float: true
+---</code></pre>
+<p>　これだとtoc: true以下が反映されない。</p>
+<pre class="r"><code>---
+title: &quot;Memo&quot;
+output: 
+  html_document:        &lt;- 改行
+    toc: true           &lt;- 半角2つスペースあける
+    toc_float: true
+---</code></pre>
+<p>　これでよし。</p>
+</div>
+</div>
 
 <footer>
   <p align="right">Copyright &copy; 2018 Tomoyuki Kobayashi　　　</p>

@@ -277,9 +277,6 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="news.html">NOTICE</a>
-</li>
-<li>
   <a href="history.html">ABOUT ME</a>
 </li>
 <li>
@@ -287,6 +284,9 @@ div.tocify {
 </li>
 <li>
   <a href="memo.html">PORTFOLIO</a>
+</li>
+<li>
+  <a href="news.html">RECORD</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -381,6 +381,7 @@ simpleslope2 &lt;- lm(y ~ x1low + x2 + x1low:x2 + c1)
 summary(simpleslope2)</code></pre>
 <p><strong>結果の書き方の例</strong><br></p>
 <p>　甘党得点とストレス得点の交互作用効果が有意であったため、下位検定として単純傾斜分析を行った。その結果、甘党を-1SDとした場合、ストレス得点の有意な効果は認められなかった（<em>b*</em> = -0.15, <em>t</em> (70) = 0.46, <em>ns.</em>）。甘党得点を+1SDとした場合、ストレス得点の正の効果が確認された（<em>b*</em> = 2.33, <em>t</em> (70) = 3.21, <em>p</em> &lt; .05）。 <br> <br></p>
+<hr />
 </div>
 </div>
 <div id="ggplot" class="section level1">
@@ -391,6 +392,7 @@ summary(simpleslope2)</code></pre>
 <li>ggplotでグラフを作成すると、x軸から棒グラフなんかが浮いてしまう（ラピュタ）。ラピュタを無くすならscale_y_continuous(expand = c(0,0))を加える<br></li>
 <li>グラフの縦軸の指定は、たとえば０～１０にしたかったらcoord_cartesian(ylim=c(0,10))<br> <br> <br></li>
 </ul>
+<hr />
 </div>
 </div>
 <div id="rmarkdown" class="section level1">

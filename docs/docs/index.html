@@ -11,7 +11,7 @@
 
 
 
-<title>Notification</title>
+<title>小林智之のページ</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,9 +19,6 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -71,7 +68,7 @@ h6 {
 }
 </style>
 
-<link rel="stylesheet" href="site_style.css" type="text/css" />
+<link rel="stylesheet" href="a_style.css" type="text/css" />
 
 </head>
 
@@ -167,101 +164,6 @@ $(document).ready(function () {
 
 
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -277,6 +179,9 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="news.html">NOTICE</a>
+</li>
+<li>
   <a href="history.html">ABOUT ME</a>
 </li>
 <li>
@@ -284,9 +189,6 @@ div.tocify {
 </li>
 <li>
   <a href="memo.html">PORTFOLIO</a>
-</li>
-<li>
-  <a href="news.html">RECORD</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -300,11 +202,17 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Notification</h1>
 
 </div>
 
 
+<style type="text/css">
+.main-container {
+max-width: 1000px;
+}
+
+</style>
+<p><img src="images/picture2.jpg" width="100%" /></p>
 
 <style>
   @import url(https://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
@@ -312,46 +220,28 @@ div.tocify {
 <style>
   @import url(https://fonts.googleapis.com/css?family=Lato:400,900);
 </style>
-  <div class='block2'>
-    <h2 class='news'>ホームページ更新
+<div class='row'>
+  <div class='inner'>
+    <h2 class='about'>My Focus
     </h2>
-    <p>2018年&emsp;6月11日&emsp;ページを更新しました</p>
-    <p>2018年&emsp;6月 2日&emsp;ページを更新しました</p>
-    <p>2018年&emsp;5月 4日&emsp;ページを更新しました</p> 
-    <p>2018年&emsp;4月22日&emsp;ページを更新しました</p>
-    <p>2018年&emsp;4月 7日&emsp;開設しました</p>
+    <p>平等や平和が良いと当然のように言われる世の中で、日々、差別や集団間のいさかいの話は後を絶ちません。何故でしょうか。<br>かかる集団間の葛藤は、限られた資源や名誉のために発生するのか。あるいは、自分たちが当たり前に過ごしている生活をまもるためには衝突を避けられないこともあるのかもしれない。あるいは、本来適応的な機能でもあるステレオタイプの働きにより、彼らはこうだ、彼らからすると私たちはどうだと、対立が形作られ、持続されるのかもしれない。</p>
+     <p>僕は、社会心理学に軸足を置き、社会的認知や集団間関係の観点から様々な集団間葛藤の緩和方法を探っています。現実の社会問題を解決するうえでは、理論とフィールドの各々に重きを置いたアプローチが大切と考え、実験室実験から訪問面接などのフィールド調査まで様々な研究手法を用いてきました。</p>
+    <p>キーワード: メタステレオタイプ、ステレオタイプ、社会的アイデンティティ、集団相互依存観、災害避難に伴う地域性の葛藤、子どもの貧困</p>
+
   </div>
+  <div class='inner'>
+    <h2 class='about'>Message
+    </h2>
+    <p class='message'>個人HPを開設しました!<br>Rで奮闘中。。</p>
+  </div>
+</div>
 
-<style type="text/css">
-#TOC a {
-color: black;
-}
-
-.tocify .tocify-header {
-color: black;
-background: #222222;
-}
-
-.tocify .tocify-header .active {
-color: white;
-background: #333333;
-}
-
-.tocify .tocify-item {
-background: #222222;
-color: white;
-
-}
-
-</style>
 
 <footer>
   <p align="right">Copyright &copy; 2018 Tomoyuki Kobayashi　　　</p>
 </footer>
 
 
-</div>
-</div>
 
 </div>
 

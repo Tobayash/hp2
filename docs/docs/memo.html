@@ -11,7 +11,7 @@
 
 
 
-<title>Notification</title>
+<title>Memo</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -277,6 +277,9 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="news.html">NOTICE</a>
+</li>
+<li>
   <a href="history.html">ABOUT ME</a>
 </li>
 <li>
@@ -284,9 +287,6 @@ div.tocify {
 </li>
 <li>
   <a href="memo.html">PORTFOLIO</a>
-</li>
-<li>
-  <a href="news.html">RECORD</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -300,10 +300,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Notification</h1>
+<h1 class="title toc-ignore">Memo</h1>
 
 </div>
-
 
 
 <style>
@@ -312,18 +311,9 @@ div.tocify {
 <style>
   @import url(https://fonts.googleapis.com/css?family=Lato:400,900);
 </style>
-  <div class='block2'>
-    <h2 class='news'>ホームページ更新
-    </h2>
-    <p>2018年&emsp;6月11日&emsp;ページを更新しました</p>
-    <p>2018年&emsp;6月 2日&emsp;ページを更新しました</p>
-    <p>2018年&emsp;5月 4日&emsp;ページを更新しました</p> 
-    <p>2018年&emsp;4月22日&emsp;ページを更新しました</p>
-    <p>2018年&emsp;4月 7日&emsp;開設しました</p>
-  </div>
-
 <style type="text/css">
-#TOC a {
+#TOC 
+a {
 color: black;
 }
 
@@ -340,10 +330,102 @@ background: #333333;
 .tocify .tocify-item {
 background: #222222;
 color: white;
+}
 
+#本文
+h1 {
+  color: #006;
+  font-size:2vw;
+  border-bottom: 1px solid #039;
 }
 
 </style>
+<p>ここにメモを残していく（自分用）。<br> <br> <br></p>
+<div class="section level1">
+<h1>階層的重回帰分析</h1>
+<p>　階層的重回帰分析は、ステップ１からステップ２へとステップごとに関心のある変数を投入していき、分散説明率が統計的に有意に増加することを検定することで、その変数の重要性を分析する手法である。<br> 　たとえば、チョコレートの摂取量に影響する要因として、甘いもの好きかとストレスが考えられるが、研究として関心があるのはこれらの交互作用効果だとする。その場合は、ステップ１では説明変数として“甘党”と“ストレス”を入れ、ステップ２ではさらに“甘党”と“ストレス”の交互作用項を入れて分析する。ただし、各変数と交互作用項の相関による多重共線性の問題が考えられるので中心化処理（平均値を引く）を忘れずに行う。<br></p>
+<div class="section level2">
+<h2>分析</h2>
+<p>　Rで分析する場合には以下のコードを用いる。説明変数の数や共変量の有無は適宜調整する。</p>
+<pre class="r"><code>data &lt;- XXX #分析したいデータを入れる
+y &lt;- data$v1  #応答変数
+x1 &lt;- data$v2 - mean(data$v2)  #説明変数（中心化）
+x2 &lt;- data$v3 - mean(data$v3)　#説明変数（中心化）
+c1 &lt;- data$v4 - mean(data$v4)　#共変量（中心化）
+
+#第1ステップ
+step1 &lt;- lm(y ~ x1 + x2 + c1)
+summary(step1)
+
+#第2ステップ
+step2 &lt;- lm(y ~ x1 + x2 + x1:x2 + c1)
+summary(step2)
+
+#平方和の変化量の検定
+anova(step1, step2)</code></pre>
+<p><strong>結果の書き方の例</strong><br></p>
+<p>　チョコ得点を応答変数とした階層的重回帰分析を行った。その結果、ステップ1（<em>R<sup>2</sup>adj</em> = .24, <em>F</em> (3,71) = 6.23, <em>p</em> &lt; .05）から交互作用項を含んだステップ2（<em>R<sup>2</sup>adj</em> = .31, <em>F</em> (4,70) = 7.01, <em>p</em> &lt; .05）で分散説明率の有意な増加が見られた（<em>ΔR<sup>2</sup></em> = .07, <em>ΔF</em> (1,70) = 4.23, <em>p</em> &lt; .05）。甘党得点とストレス得点の交互作用効果が有意であった（<em>b*</em> = 0.22, <em>t</em> (70) = 2.82, <em>p</em> &lt; .05）。甘党得点の主効果（<em>b*</em> = 0.02, <em>t</em> (70) = 0.01, <em>ns.</em>）とストレス得点の主効果（<em>b*</em> = 0.15, <em>t</em> (70) = 1.30, <em>ns.</em>）は有意ではなかった。共変量の食事量の主効果が有意であった（<em>b*</em> = -2.11, <em>t</em> (70) = 4.12, <em>p</em> &lt; .05）。</p>
+</div>
+<div class="section level2">
+<h2>単純傾斜分析</h2>
+<p>　交互作用効果が有意であった場合、下位検定として単純傾斜分析を行う。</p>
+<pre class="r"><code>#下位検定
+## x1が+1SDの場合のx2の効果を分析
+x1high &lt;- data$v2 - (mean(data$v2) + sd(data$v2))
+simpleslope1 &lt;- lm(y ~ x1high + x2 + x1high:x2 + c1) 
+summary(simpleslope1)
+
+## x1が-1SDの場合のx2の効果を分析
+x1low &lt;- data$v2 - (mean(data$v2) - sd(data$v2))
+simpleslope2 &lt;- lm(y ~ x1low + x2 + x1low:x2 + c1)
+summary(simpleslope2)</code></pre>
+<p><strong>結果の書き方の例</strong><br></p>
+<p>　甘党得点とストレス得点の交互作用効果が有意であったため、下位検定として単純傾斜分析を行った。その結果、甘党を-1SDとした場合、ストレス得点の有意な効果は認められなかった（<em>b*</em> = -0.15, <em>t</em> (70) = 0.46, <em>ns.</em>）。甘党得点を+1SDとした場合、ストレス得点の正の効果が確認された（<em>b*</em> = 2.33, <em>t</em> (70) = 3.21, <em>p</em> &lt; .05）。 <br> <br></p>
+</div>
+</div>
+<div id="ggplot" class="section level1">
+<h1>ggplot</h1>
+<div class="section level2">
+<h2>軸の設定</h2>
+<ul>
+<li>ggplotでグラフを作成すると、x軸から棒グラフなんかが浮いてしまう（ラピュタ）。ラピュタを無くすならscale_y_continuous(expand = c(0,0))を加える<br></li>
+<li>グラフの縦軸の指定は、たとえば０～１０にしたかったらcoord_cartesian(ylim=c(0,10))<br> <br> <br></li>
+</ul>
+</div>
+</div>
+<div id="rmarkdown" class="section level1">
+<h1>Rmarkdown</h1>
+<div id="yaml" class="section level2">
+<h2>yamlヘッダ</h2>
+<ul>
+<li>Rmarkdownでドキュメントを作るときの全体設定<br></li>
+<li>改行やスペースが重要になるので注意<br> たとえば・・・ 　</li>
+</ul>
+<pre class="r"><code>---
+title: &quot;Memo&quot;
+output: html_document:
+  toc: true
+  toc_float: true
+---</code></pre>
+<p>　これだとエラーが出るし・・・</p>
+<pre class="r"><code>---
+title: &quot;Memo&quot;
+output: 
+  html_document:
+  toc: true
+  toc_float: true
+---</code></pre>
+<p>　これだとtoc: true以下が反映されない。</p>
+<pre class="r"><code>---
+title: &quot;Memo&quot;
+output: 
+  html_document:        &lt;- 改行
+    toc: true           &lt;- 半角2つスペースあける
+    toc_float: true
+---</code></pre>
+<p>　これでよし。</p>
+</div>
+</div>
 
 <footer>
   <p align="right">Copyright &copy; 2018 Tomoyuki Kobayashi　　　</p>

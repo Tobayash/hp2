@@ -416,6 +416,23 @@ VSS(va,graph=FALSE)　#推定される最小の因子数（最小平均偏相関
 <div id="ggplot" class="section level1">
 <h1>ggplot</h1>
 <div class="section level2">
+<h2>ロジスティック回帰分析のグラフ</h2>
+<p>　なんかいい感じのグラフ描きたいなって思いますよね。<br> 　ローデータがぶわーってプロットされてて、回帰直線・曲線がシューン！なってるやつ。<br> 　下のコードを使います。 　</p>
+<pre class="r"><code>library(ggplot2)
+ggplot(data,                                                  　　#データを入れる
+       aes(x=valiable1, y=as.numeric(categolical1)))+　　　　 　　#x軸とy軸の変数を決める
+  geom_point(position=position_jitter(width=0.4,height=0.08), 　　
+             alpha=.4,shape=21,size=1.5)+
+    #ローデータをプロット。ただし、同じ箇所の点が重なってプロットされるので、散らす設定する
+  stat_smooth(method=&quot;glm&quot;,
+              method.args = list(family=&quot;binomial&quot;(link=&quot;logit&quot;)))+  
+    #ロジスティック曲線。ここはきちんと書かないとうまく表示されない。
+  xlab(&quot;商品魅力度&quot;)+ylab(&quot;買う・買わない&quot;)+    #x軸とy軸の名前を決める
+  coord_cartesian(ylim=c(0,1))+　　　　　　　　　　#y軸の最小と最大の値を決める
+  theme_classic()　　　　　　　　　　　　　　　　　#クラシックなデザインが好き</code></pre>
+<p>　すると、このようなものができます。<br> 　 　 　<img src="images/logistic.png" /> 　 　 　<br> 　なんかいい感じ。</p>
+</div>
+<div class="section level2">
 <h2>軸の設定</h2>
 <ul>
 <li>ggplotでグラフを作成すると、x軸から棒グラフなんかが浮いてしまう（ラピュタ）。ラピュタを無くすならscale_y_continuous(expand = c(0,0))を加える<br></li>

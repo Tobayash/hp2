@@ -343,16 +343,18 @@ h1 {
 <p>ここにメモを残していく（自分用）。<br> <br> <br></p>
 <hr />
 <div class="section level1">
-<h1>階層的重回帰分析</h1>
-<p>　階層的重回帰分析は、ステップ１からステップ２へとステップごとに関心のある変数を投入していき、分散説明率が統計的に有意に増加することを検定することで、その変数の重要性を分析する手法である。<br> 　たとえば、チョコレートの摂取量に影響する要因として、甘いもの好きかとストレスが考えられるが、研究として関心があるのはこれらの交互作用効果だとする。その場合は、ステップ１では説明変数として“甘党”と“ストレス”を入れ、ステップ２ではさらに“甘党”と“ストレス”の交互作用項を入れて分析する。ただし、各変数と交互作用項の相関による多重共線性の問題が考えられるので中心化処理（平均値を引く）を忘れずに行う。<br></p>
+<h1>分析手法</h1>
 <div class="section level2">
-<h2>分析</h2>
-<p>　Rで分析する場合には以下のコードを用いる。説明変数の数や共変量の有無は適宜調整する。</p>
-<pre class="r"><code>data &lt;- XXX #分析したいデータを入れる
-y &lt;- data$v1  #応答変数
-x1 &lt;- data$v2 - mean(data$v2)  #説明変数（中心化）
-x2 &lt;- data$v3 - mean(data$v3)　#説明変数（中心化）
-c1 &lt;- data$v4 - mean(data$v4)　#共変量（中心化）
+<h2>階層的重回帰分析</h2>
+<p>　階層的重回帰分析は、ステップ１からステップ２へとステップごとに関心のある変数を投入していき、分散説明率が統計的に有意に増加することを検定することで、その変数の重要性を分析する手法である。<br> 　たとえば、大事な人に会うときや人前で話をするとき、誰しも不安を感じやすい（状態不安という）。そのときの不安の程度は、協調性や誠実さといったパーソナリティ特性によることが考えられるが、研究として関心があるのはこれらの交互作用効果だとする（“誠実さが高く協調性が高い人は周囲に合わせようとするため、不安を感じやすい”とか）。その場合は、ステップ１では説明変数として“協調性”と“誠実さ”を入れ、ステップ２ではさらに“協調性”と“誠実さ”の交互作用項を入れて分析する。ただし、各変数と交互作用項の相関による多重共線性の問題が考えられるので中心化処理（平均値を引く）を忘れずに行う。<br></p>
+<div class="section level3">
+<h3>分析</h3>
+<p>　Rで分析する場合には以下のコードを用いる。<br> 　</p>
+<pre class="r"><code>data &lt;- XXX     　　　　　　　 #分析したいデータを入れる
+y  &lt;- data$v1 　　　　　　　　 #応答変数: 状態不安
+x1 &lt;- data$v2 - mean(data$v2)  #説明変数(中心化): 協調性
+x2 &lt;- data$v3 - mean(data$v3)  #説明変数(中心化): 誠実さ
+c1 &lt;- data$v4 - mean(data$v4)  #共変量(中心化): 神経症傾向
 
 #第1ステップ
 step1 &lt;- lm(y ~ x1 + x2 + c1)
@@ -364,12 +366,111 @@ summary(step2)
 
 #平方和の変化量の検定
 anova(step1, step2)</code></pre>
-<p><strong>結果の書き方の例</strong><br></p>
-<p>　チョコ得点を応答変数とした階層的重回帰分析を行った。その結果、ステップ1（<em>R<sup>2</sup>adj</em> = .24, <em>F</em> (3,71) = 6.23, <em>p</em> &lt; .05）から交互作用項を含んだステップ2（<em>R<sup>2</sup>adj</em> = .31, <em>F</em> (4,70) = 7.01, <em>p</em> &lt; .05）で分散説明率の有意な増加が見られた（<em>ΔR<sup>2</sup></em> = .07, <em>ΔF</em> (1,70) = 4.23, <em>p</em> &lt; .05）。甘党得点とストレス得点の交互作用効果が有意であった（<em>b*</em> = 0.22, <em>t</em> (70) = 2.82, <em>p</em> &lt; .05）。甘党得点の主効果（<em>b*</em> = 0.02, <em>t</em> (70) = 0.01, <em>ns.</em>）とストレス得点の主効果（<em>b*</em> = 0.15, <em>t</em> (70) = 1.30, <em>ns.</em>）は有意ではなかった。共変量の食事量の主効果が有意であった（<em>b*</em> = -2.11, <em>t</em> (70) = 4.12, <em>p</em> &lt; .05）。</p>
+<p>　 　今回は、データセットとしてpsychパッケージに入っている“epi.bfi”を使用する。このデータセットにはアイゼンク性格検査（EPI）とBig 5尺度、ベック抑うつ性尺度、特性‐状態不安の得点が231人分入っている。<br> 　 　実際に分析を行う際には、説明変数の数や共変量の有無は適宜調整する。</p>
+<pre class="r"><code>library(psych)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;psych&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
+## 
+##     %+%, alpha</code></pre>
+<pre class="r"><code>data &lt;- epi.bfi 　　　　　　　　　　　　#分析したいデータを入れる
+y  &lt;- data$stateanx  　　　　　　　　　 #応答変数: 状態不安
+x1 &lt;- data$bfcon - mean(data$bfcon)     #説明変数(中心化): 協調性
+x2 &lt;- data$bfagree - mean(data$bfagree) #説明変数(中心化): 誠実さ
+c1 &lt;- data$bfneur - mean(data$bfneur)　 #共変量(中心化): 神経症傾向</code></pre>
+<ul>
+<li>第1ステップ</li>
+</ul>
+<pre class="r"><code>step1 &lt;- lm(y ~ x1 + x2 + c1)
+summary(step1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x1 + x2 + c1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -20.622  -6.996  -1.325   5.394  28.091 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 39.84848    0.64525  61.757  &lt; 2e-16 ***
+## x1          -0.05379    0.03318  -1.621   0.1064    
+## x2          -0.08006    0.04001  -2.001   0.0466 *  
+## c1           0.24162    0.02781   8.688  7.4e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 9.807 on 227 degrees of freedom
+## Multiple R-squared:  0.2803, Adjusted R-squared:  0.2708 
+## F-statistic: 29.47 on 3 and 227 DF,  p-value: 3.963e-16</code></pre>
+<ul>
+<li>第2ステップ</li>
+</ul>
+<pre class="r"><code>step2 &lt;- lm(y ~ x1 + x2 + x1:x2 + c1)
+summary(step2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x1 + x2 + x1:x2 + c1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -20.660  -6.979  -1.415   5.140  28.356 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 39.330808   0.690941  56.924  &lt; 2e-16 ***
+## x1          -0.056617   0.032994  -1.716   0.0875 .  
+## x2          -0.083492   0.039784  -2.099   0.0370 *  
+## c1           0.234168   0.027875   8.401 4.94e-15 ***
+## x1:x2        0.002911   0.001451   2.007   0.0460 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 9.742 on 226 degrees of freedom
+## Multiple R-squared:  0.2929, Adjusted R-squared:  0.2804 
+## F-statistic:  23.4 on 4 and 226 DF,  p-value: 3.352e-16</code></pre>
+<ul>
+<li>平方和の変化量の検定</li>
+</ul>
+<pre class="r"><code>anova(step1, step2)</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="right">Res.Df</th>
+<th align="right">RSS</th>
+<th align="right">Df</th>
+<th align="right">Sum of Sq</th>
+<th align="right">F</th>
+<th align="right">Pr(&gt;F)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">227</td>
+<td align="right">21831.76</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">226</td>
+<td align="right">21449.49</td>
+<td align="right">1</td>
+<td align="right">382.2643</td>
+<td align="right">4.027681</td>
+<td align="right">0.0459507</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="section level2">
-<h2>単純傾斜分析</h2>
-<p>　交互作用効果が有意であった場合、下位検定として単純傾斜分析を行う。</p>
+<p><strong>結果の書き方の例</strong><br></p>
+<p>　状態不安得点を応答変数とした階層的重回帰分析を行った。その結果、ステップ1（<em>R<sup>2</sup>adj</em> = .27, <em>F</em> (3,227) = 29.47, <em>p</em> &lt; .05）から交互作用項を含んだステップ2（<em>R<sup>2</sup>adj</em> = .28, <em>F</em> (4,226) = 23.40, <em>p</em> &lt; .05）で分散説明率の有意な増加が見られた（<em>ΔR<sup>2</sup></em> = .07, <em>ΔF</em> (1,226) = 4.03, <em>p</em> &lt; .05）。誠実さ得点と協調性得点の交互作用効果が有意であった（<em>b*</em> = 0.002, <em>t</em> (226) = 2.01, <em>p</em> &lt; .05）。誠実さ得点の主効果（<em>b*</em> = -0.06, <em>t</em> (226) = 1.72, <em>ns.</em>）は有意ではなかった。協調性得点の主効果が有意であった（<em>b*</em> = -0.08, <em>t</em> (226) = 2.10, <em>p</em> &lt; .05）。共変量の神経症傾向得点の主効果が有意であった（<em>b*</em> = 0.23, <em>t</em> (226) = 8.40, <em>p</em> &lt; .05）。</p>
+</div>
+<div class="section level3">
+<h3>単純傾斜分析</h3>
+<p>　交互作用効果が有意であった場合、下位検定として単純傾斜分析を行う。<br> 　コードは以下の通り。 　 　</p>
 <pre class="r"><code>#下位検定
 ## x1が+1SDの場合のx2の効果を分析
 x1high &lt;- data$v2 - (mean(data$v2) + sd(data$v2))
@@ -380,37 +481,308 @@ summary(simpleslope1)
 x1low &lt;- data$v2 - (mean(data$v2) - sd(data$v2))
 simpleslope2 &lt;- lm(y ~ x1low + x2 + x1low:x2 + c1)
 summary(simpleslope2)</code></pre>
+<p>　</p>
+<ul>
+<li>x1が+1SDの場合のx2の効果を分析</li>
+</ul>
+<pre class="r"><code>x1high &lt;- data$bfcon - (mean(data$bfcon) + sd(data$bfcon))
+simpleslope1 &lt;- lm(y ~ x1high + x2 + x1high:x2 + c1) 
+summary(simpleslope1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x1high + x2 + x1high:x2 + c1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -20.660  -6.979  -1.415   5.140  28.356 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 38.092154   1.007153  37.822  &lt; 2e-16 ***
+## x1high      -0.056617   0.032994  -1.716   0.0875 .  
+## x2          -0.019799   0.049815  -0.397   0.6914    
+## c1           0.234168   0.027875   8.401 4.94e-15 ***
+## x1high:x2    0.002911   0.001451   2.007   0.0460 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 9.742 on 226 degrees of freedom
+## Multiple R-squared:  0.2929, Adjusted R-squared:  0.2804 
+## F-statistic:  23.4 on 4 and 226 DF,  p-value: 3.352e-16</code></pre>
+<ul>
+<li>x1が-1SDの場合のx2の効果を分析</li>
+</ul>
+<pre class="r"><code>x1low &lt;- data$bfcon - (mean(data$bfcon) - sd(data$bfcon))
+simpleslope2 &lt;- lm(y ~ x1low + x2 + x1low:x2 + c1)
+summary(simpleslope2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x1low + x2 + x1low:x2 + c1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -20.660  -6.979  -1.415   5.140  28.356 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 40.569461   0.991228  40.929  &lt; 2e-16 ***
+## x1low       -0.056617   0.032994  -1.716  0.08754 .  
+## x2          -0.147186   0.051948  -2.833  0.00502 ** 
+## c1           0.234168   0.027875   8.401 4.94e-15 ***
+## x1low:x2     0.002911   0.001451   2.007  0.04595 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 9.742 on 226 degrees of freedom
+## Multiple R-squared:  0.2929, Adjusted R-squared:  0.2804 
+## F-statistic:  23.4 on 4 and 226 DF,  p-value: 3.352e-16</code></pre>
 <p><strong>結果の書き方の例</strong><br></p>
-<p>　甘党得点とストレス得点の交互作用効果が有意であったため、下位検定として単純傾斜分析を行った。その結果、甘党を-1SDとした場合、ストレス得点の有意な効果は認められなかった（<em>b*</em> = -0.15, <em>t</em> (70) = 0.46, <em>ns.</em>）。甘党得点を+1SDとした場合、ストレス得点の正の効果が確認された（<em>b*</em> = 2.33, <em>t</em> (70) = 3.21, <em>p</em> &lt; .05）。 <br> <br></p>
+<p>　誠実さ得点と協調性得点の交互作用効果が有意であったため、下位検定として単純傾斜分析を行った。その結果、誠実さ得点を-1SDとした場合、協調性得点の負の効果が確認された（<em>b*</em> = -0.15, <em>t</em> (226) = 2.833, <em>p</em> &lt; .05）。誠実さ得点を+1SDとした場合、協調性得点の有意な効果は認められなかった（<em>b*</em> = -0.02, <em>t</em> (226) = 0.40, <em>ns.</em>）。<br> <br> 　あらら、なんだか変な結果に・・・ <br></p>
 <hr />
 </div>
 </div>
-<div class="section level1">
-<h1>探索的因子分析</h1>
+<div class="section level2">
+<h2>探索的因子分析</h2>
 <p>　科学において測定は重要である。心理学においては、目に見えない心の働きを研究するうえで様々な質問項目が利用されてきており、それがお家芸にもなっている。複数からなる質問項目がいったいどのような概念を表しているのかは関心の高いところであるが、探索的因子分析は項目への回答に影響した因子の存在を統計的に抽出する手法である。</p>
-<div id="-1" class="section level2">
-<h2>分析</h2>
-<p>　Rで分析する場合には以下のコードを用いる。 　</p>
+<div id="-1" class="section level3">
+<h3>分析</h3>
+<p>　Rで分析する場合には以下のコードを用いる。</p>
 <pre class="r"><code>data &lt;- XXX #分析したいデータを入れる
 
 library(psych) #psychパッケージを使う
 
-#探索的因子分析
+#因子数の決定
 va&lt;-data.frame(data$Q1,data$Q2,data$Q3,data$Q4,data$Q5,data$Q6,data$Q7,data$Q8,data$Q9,data$Q10,data$Q11) #因子分析にかける変数を取り出す
 
+fa.parallel(va) #推定される最大の因子数（平行分析）
+VSS(va,plot=FALSE)　#推定される最小の因子数（最小平均偏相関）
+
+
+#探索的因子分析
 fa.result &lt;- fa(va, nfactors = 4, fm = &quot;minres&quot;, rotate = &quot;promax&quot;)　#たとえば因子数を4として、最小二乗法のプロマックス、どーん!
 print(fa.result, sort = T, digit = 3, cut=0.3) #結果の表示。ソートかけて、桁数は3、0.3以下の結果はカット</code></pre>
 <p>　上のコードでは、回転法はプロマックス回転、初期解の算出には最小二乗法を用いている。<br> 　回転法（rotate=）については直交回転と斜交回転を選択できる。直交回転なら“varimax”、斜交回転なら“promax”が使えるが、その他の回転法も直交回転と斜交回転のそれぞれ用意されている。<br> 　初期解の算出（fm=）には、最小二乗法なら“minres”、最尤法なら“ml”、主因子法なら“pa”が使える。他にもあり。<br></p>
-</div>
-<div class="section level2">
-<h2>因子数の選定</h2>
-<p>　 　因子分析をするにあたっては因子数の選定が必要になってくる。基本的には理論的な説明が可能であることが大切だろうが、統計的な算出方法もある。有名なのはスクリープロットでかくんとなってるところを基準に見るやつ。<br> 　その他、平行分析と最小平均偏相関という手法がある（どちらもpsychoパッケージに入ってる）。数学的なことはわからないけど、平行分析は因子数として選定され得る数を大きめに出す。一方、最小平均偏相関は因子数を倹約的に推定する。そのため、因子数はだいたい最小平均偏相関の値から平行分析の値までの間で分析していって、理論的な説明や因子分析のモデル適合度を見ながら最終的な因子数を決めるのが良さそう。<br></p>
+<p>** 因子数の選定 ** 　 　因子分析をするにあたってはまず因子数の選定が必要になってくる。基本的には理論的な説明が可能であることが大切だろうが、統計的な算出方法もある。有名なのはスクリープロットでかくんとなってるところを基準に見るやつ。<br> 　その他、平行分析と最小平均偏相関という手法がある（どちらもpsychoパッケージに入ってる）。数学的なことはわからないけど、平行分析は因子数として選定され得る数を大きめに出す。一方、最小平均偏相関は因子数を倹約的に推定する。そのため、因子数はだいたい最小平均偏相関の値から平行分析の値までの間で分析していって、理論的な説明や因子分析のモデル適合度を見ながら最終的な因子数を決めるのが良さそう。<br> 　 　データセットとしてpsychパッケージに入っている“epi.bfi”を使用する。このデータセットにはアイゼンク性格検査（EPI）とBig 5尺度、ベック抑うつ性尺度、特性‐状態不安の得点が231人分入っている。<br></p>
 <pre class="r"><code>library(psych) #psychパッケージを使う
 
-fa.parallel(va) #推定される最大の因子数（平行分析）
-VSS(va,graph=FALSE)　#推定される最小の因子数（最小平均偏相関）</code></pre>
-<p>　</p>
+va&lt;-epi.bfi #因子分析にかける変数を取り出す。ここではすべての変数を使う。</code></pre>
+<ul>
+<li>平行分析</li>
+</ul>
+<pre class="r"><code>fa.parallel(va) #推定される最大の因子数（平行分析）</code></pre>
+<p><img src="memo_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre><code>## Parallel analysis suggests that the number of factors =  3  and the number of components =  3</code></pre>
+<ul>
+<li>最小平均偏相関<br></li>
+</ul>
+<p>　“The Velicer MAP achieves a minimum of 0.05 with…”のところのfactorsを見る。 　 　</p>
+<pre class="r"><code>VSS(va,plot=FALSE)　#推定される最小の因子数（最小平均偏相関）</code></pre>
+<pre><code>## 
+## Very Simple Structure
+## Call: vss(x = x, n = n, rotate = rotate, diagonal = diagonal, fm = fm, 
+##     n.obs = n.obs, plot = plot, title = title, use = use, cor = cor)
+## VSS complexity 1 achieves a maximimum of 0.73  with  3  factors
+## VSS complexity 2 achieves a maximimum of 0.86  with  3  factors
+## 
+## The Velicer MAP achieves a minimum of 0.05  with  3  factors 
+## BIC achieves a minimum of  -22.79  with  6  factors
+## Sample Size adjusted BIC achieves a minimum of  -3.74  with  8  factors
+## 
+## Statistics by number of factors 
+##   vss1 vss2   map dof   chisq     prob sqresid  fit RMSEA BIC  SABIC
+## 1 0.53 0.00 0.098  65 1253.38 2.0e-219    14.0 0.53 0.286 900 1105.6
+## 2 0.70 0.76 0.076  53  704.54 1.2e-114     7.0 0.76 0.235 416  584.1
+## 3 0.73 0.86 0.050  42  354.38  4.8e-51     3.1 0.90 0.183 126  258.9
+## 4 0.71 0.86 0.065  32  262.74  4.6e-38     2.5 0.92 0.181  89  190.0
+## 5 0.65 0.84 0.088  23  142.11  3.8e-19     2.1 0.93 0.153  17   89.8
+## 6 0.63 0.85 0.116  15   58.85  4.0e-07     1.8 0.94 0.116 -23   24.8
+## 7 0.66 0.83 0.147   8   21.71  5.5e-03     1.7 0.94 0.089 -22    3.5
+## 8 0.65 0.81 0.218   2    0.81  6.7e-01     1.3 0.96 0.000 -10   -3.7
+##   complex  eChisq    SRMR eCRMS eBIC
+## 1     1.0 1.5e+03 0.20267 0.222 1126
+## 2     1.1 4.9e+02 0.11719 0.142  206
+## 3     1.3 5.6e+01 0.03932 0.054 -173
+## 4     1.5 2.8e+01 0.02811 0.044 -146
+## 5     1.7 1.4e+01 0.01940 0.036 -112
+## 6     1.7 3.3e+00 0.00952 0.022  -78
+## 7     1.8 7.7e-01 0.00461 0.014  -43
+## 8     1.7 1.5e-02 0.00065 0.004  -11</code></pre>
+<p>** 探索的因子分析 **</p>
+<p>　因子数は３因子が良さそう。</p>
+<pre class="r"><code>fa.result &lt;- fa(va, nfactors = 3, fm = &quot;minres&quot;, rotate = &quot;promax&quot;)　#因子数を3として、最小二乗法のプロマックス、どーん!
+print(fa.result, sort = T, digit = 3, cut=0.3) #結果の表示。ソートかけて、桁数は3、0.3以下の結果はカット</code></pre>
+<pre><code>## Factor Analysis using method =  minres
+## Call: fa(r = va, nfactors = 3, rotate = &quot;promax&quot;, fm = &quot;minres&quot;)
+## 
+##  Warning: A Heywood case was detected. 
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##          item    MR1    MR2    MR3    h2      u2  com
+## epiNeur     5  0.828               0.663  0.3371 1.05
+## traitanx   12  0.825               0.821  0.1793 1.15
+## bfneur      9  0.821         0.334 0.643  0.3566 1.33
+## bdi        11  0.718               0.534  0.4663 1.01
+## stateanx   13  0.662               0.451  0.5487 1.01
+## epilie      4                      0.187  0.8125 2.39
+## epiE        1         1.015        1.050 -0.0497 1.02
+## epiImp      3         0.757        0.568  0.4319 1.07
+## epiS        2         0.702        0.584  0.4165 1.20
+## bfagree     6                0.646 0.449  0.5512 1.03
+## bfopen     10                0.642 0.404  0.5963 1.23
+## bfcon       7                0.639 0.464  0.5359 1.35
+## bfext       8         0.481  0.613 0.685  0.3155 1.90
+## 
+##                         MR1   MR2   MR3
+## SS loadings           3.127 2.541 1.834
+## Proportion Var        0.241 0.195 0.141
+## Cumulative Var        0.241 0.436 0.577
+## Proportion Explained  0.417 0.339 0.244
+## Cumulative Proportion 0.417 0.756 1.000
+## 
+##  With factor correlations of 
+##        MR1    MR2    MR3
+## MR1  1.000 -0.010 -0.257
+## MR2 -0.010  1.000  0.117
+## MR3 -0.257  0.117  1.000
+## 
+## Mean item complexity =  1.3
+## Test of the hypothesis that 3 factors are sufficient.
+## 
+## The degrees of freedom for the null model are  78  and the objective function was  8.247 with Chi Square of  1854.125
+## The degrees of freedom for the model are 42  and the objective function was  1.59 
+## 
+## The root mean square of the residuals (RMSR) is  0.039 
+## The df corrected root mean square of the residuals is  0.054 
+## 
+## The harmonic number of observations is  231 with the empirical chi square  55.713  with prob &lt;  0.0764 
+## The total number of observations was  231  with Likelihood Chi Square =  354.378  with prob &lt;  4.81e-51 
+## 
+## Tucker Lewis Index of factoring reliability =  0.6703
+## RMSEA index =  0.1831  and the 90 % confidence intervals are  0.1628 0.1973
+## BIC =  125.797
+## Fit based upon off diagonal values = 0.985</code></pre>
 <hr />
+</div>
+</div>
+<div class="section level2">
+<h2>クラスター分析</h2>
+<p>　以下のコードを使う。 　</p>
+<pre class="r"><code>clust &lt;- XXX  #分析したいデータを入れる
+
+# 距離の計算
+uclust &lt;-  dist(clust)^2   #ユークリッド距離の平方
+
+result &lt;- hclust(uclust, method=&quot;ward.D2&quot;)　#Ward法
+
+groups &lt;- cutree(result, k=4) #クラスタ数を4つとする
+groups &lt;- factor(groups)
+
+#クラスタに名前を付ける
+levels(groups)[1]&lt;-&quot;Group1&quot;
+levels(groups)[2]&lt;-&quot;Group2&quot;
+levels(groups)[3]&lt;-&quot;Group3&quot;
+levels(groups)[3]&lt;-&quot;Group4&quot;
+
+table(groups)
+
+clust$groups&lt;-groups
+aggregate(.~groups, data=clust, FUN=mean)</code></pre>
+<div class="section level4">
+<h4>クラスタ数の分析</h4>
+<p>　クラスタ数を選定する方法として、The Calinski-Harabasz indexがある。<br> 　クラスター数ごとに、クラスタ内の距離の2乗の合計値（within sum of squares; WSS）を算出し、その曲線のエルボーを探す。クラスタ数が増加すると、total WSSが減少するのだが、理想的なクラスター数を超えるとWSSの減少割合が落ちるという見込みからエルボー探しをする。<br> 　また、Calinski-Harabasz基準とは、WSSに対するクラスター間の分散（データセットの重心からすべてのクラスターの重心の分散）の割合である。</p>
+<pre class="r"><code>library(psych)
+clust&lt;-epi.bfi[,6:10]</code></pre>
+<p><img src="memo_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>　エルボー…４…かな？</p>
+</div>
+<div class="section level3">
+<h3>クラスタ分析</h3>
+<pre class="r"><code># 距離の計算
+uclust &lt;-  dist(clust)^2   #ユークリッド距離の平方
+
+result &lt;- hclust(uclust, method=&quot;ward.D2&quot;)　#Ward法
+
+groups &lt;- cutree(result, k=4) #クラスタ数を4つとする
+groups &lt;- factor(groups)
+
+#クラスタに名前を付ける
+levels(groups)[1]&lt;-&quot;Group1&quot;
+levels(groups)[2]&lt;-&quot;Group2&quot;
+levels(groups)[3]&lt;-&quot;Group3&quot;
+levels(groups)[4]&lt;-&quot;Group4&quot;
+
+table(groups)</code></pre>
+<pre><code>## groups
+## Group1 Group2 Group3 Group4 
+##     71     67     35     58</code></pre>
+<pre class="r"><code>clust$groups&lt;-groups
+per&lt;-aggregate(.~groups, data=clust, FUN=mean)
+per</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">groups</th>
+<th align="right">bfagree</th>
+<th align="right">bfcon</th>
+<th align="right">bfext</th>
+<th align="right">bfneur</th>
+<th align="right">bfopen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Group1</td>
+<td align="right">126.1408</td>
+<td align="right">116.29577</td>
+<td align="right">106.46479</td>
+<td align="right">62.95775</td>
+<td align="right">120.0986</td>
+</tr>
+<tr class="even">
+<td align="left">Group2</td>
+<td align="right">115.0299</td>
+<td align="right">96.50746</td>
+<td align="right">99.85075</td>
+<td align="right">98.94030</td>
+<td align="right">123.6119</td>
+</tr>
+<tr class="odd">
+<td align="left">Group3</td>
+<td align="right">114.2000</td>
+<td align="right">106.20000</td>
+<td align="right">62.88571</td>
+<td align="right">88.60000</td>
+<td align="right">101.1714</td>
+</tr>
+<tr class="even">
+<td align="left">Group4</td>
+<td align="right">141.6207</td>
+<td align="right">133.12069</td>
+<td align="right">123.32759</td>
+<td align="right">105.53448</td>
+<td align="right">140.7241</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>#図示
+library(ggplot2)
+library(reshape2)
+meltd&lt;-melt(per, id.vars=&quot;groups&quot;,variable.names=&quot;items&quot;,value.name=&quot;per&quot;)
+
+ggplot(meltd,aes(x=groups, y=per, fill=variable))+
+  geom_bar(stat=&quot;identity&quot;,position = &quot;dodge&quot;, colour =&quot;black&quot;,width=0.6)+
+  xlab(&quot;Personality&quot;)+ylab(&quot;score&quot;)+
+  scale_fill_grey(start =0.1, end=1.0)+
+  scale_y_continuous(expand = c(0,0))+
+  theme_classic()+
+  guides(fill=guide_legend(title=NULL))+
+  guides(fill=guide_legend(nrow=7))+
+  theme(legend.position=&quot;right&quot;)+
+  theme(legend.text=element_text(10))</code></pre>
+<p><img src="memo_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<hr />
+</div>
 </div>
 </div>
 <div id="ggplot" class="section level1">

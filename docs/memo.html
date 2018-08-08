@@ -801,10 +801,11 @@ ggplot(data,                                                  　　#データ�
   stat_smooth(method=&quot;glm&quot;,
               method.args = list(family=&quot;binomial&quot;(link=&quot;logit&quot;)))+  
     #ロジスティック曲線。ここはきちんと書かないとうまく表示されない。
-  xlab(&quot;商品魅力度&quot;)+ylab(&quot;買う・買わない&quot;)+    #x軸とy軸の名前を決める
+  xlab(&quot;X軸の名前&quot;)+ylab(&quot;Y軸の名前&quot;)+    #x軸とy軸の名前を決める
   coord_cartesian(ylim=c(0,1))+　　　　　　　　　　#y軸の最小と最大の値を決める
   theme_classic()　　　　　　　　　　　　　　　　　#クラシックなデザインが好き</code></pre>
-<p>　すると、このようなものができます。<br> 　 　 　<img src="images/logistic.png" /> 　 　 　<br> 　なんかいい感じ。</p>
+<p>　すると、このようなものができます。<br></p>
+<p><img src="memo_files/figure-html/unnamed-chunk-20-1.png" width="672" /> 　 　<br> 　なんか違うけど、データがそうならちゃんとS字になるはずなんだ・・・</p>
 </div>
 <div class="section level2">
 <h2>軸の設定</h2>

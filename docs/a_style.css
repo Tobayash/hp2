@@ -3,8 +3,9 @@ body {
   background-color:#C0C0C0;
   max-width: 100%;
 }
+
 p {
-  font-family:'Lato', 'Noto Sans Japanese', '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+  font-family:'Lato', 'Noto Sans Japanese', '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', 'Meiryo', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
   font-size:100%;
 }
 
@@ -21,8 +22,8 @@ p {
   text-align: left;
   width: 80%;
   margin: 0 auto;
-  padding-left:40px;
-  padding-right:40px;
+  padding-left:auto;
+  padding-right:auto;
   padding-bottom:40px;
   }
 
@@ -70,7 +71,7 @@ p {
 .message{
   font-size:2.2vmin;
   text-align: center;
-  font-family:'Lato', 'Noto Sans Japanese', '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;   
+  font-family:'Lato', 'Noto Sans Japanese', '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', 'YuGothic', 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', 'Meiryo', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;   
 }
 
 footer {

@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -73,9 +74,7 @@ h6 {
 
 <link rel="stylesheet" href="site_style.css" type="text/css" />
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -100,6 +99,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -114,7 +116,6 @@ body {
   padding-top: 56px;
   margin-top: -56px;
 }
-
 .section h2 {
   padding-top: 56px;
   margin-top: -56px;
@@ -134,6 +135,43 @@ body {
 .section h6 {
   padding-top: 56px;
   margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -155,47 +193,65 @@ $(document).ready(function () {
 });
 </script>
 
-
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-</script>
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
 
 <!-- code folding -->
 
 
-
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -244,8 +300,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -254,6 +308,16 @@ div.tocify {
 
 
 </style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
@@ -330,96 +394,7 @@ color: white;
 }
 
 </style>
-
-  <div class='block2'>
-    <h2 class='news'>学術論文
-    </h2>
-    <p><strong>地域住民と健康リスクを考える：東日本大震災後の保健活動の向上を目指したリスクコミュニケーション支援事業</strong><br>
-    吉田&ensp;和樹・小林&ensp;智之・後藤&ensp;あや・竹林&ensp;由武・熊谷&ensp;敦史・安井&ensp;清孝・黒田&ensp;佑次郎・末永&ensp;カツ子・小宮&ensp;ひろみ・前田&ensp;香・村上&ensp;道夫<br>
-    保健師ジャーナル&ensp;75(1)&ensp;54-59&ensp;2019年1月</p>
-    
-    <p><strong>困窮度による子どもの健康格差―大阪府子どもの生活に関する実態調査より―</strong><br>
-    駒田&ensp;安紀・嵯峨&ensp;嘉子・小林&ensp;智之・山下&ensp;剛徳・所&ensp;道彦・山野&ensp;則子<br>
-    厚生の指標&ensp;65(11)&ensp;16-23&ensp;2018年9月</p>
-    
-    <p><strong>メタステレオタイプと平等主義的な信念が集団間相互作用に及ぼす影響</strong><br>
-    小林&ensp;智之・及川&ensp;昌典<br>
-    心理学研究&ensp;88(6)&ensp;574-579&ensp;2018年2月</p>
-    
-    <p><strong>集団間葛藤におけるネガティブなメタステレオタイプの働き</strong><br>
-    小林&ensp;智之<br>
-    同志社大学&ensp;2017年3月</p>
-    
-    <p><strong>メタステレオタイプと集団相互依存観が外集団に対する反応に及ぼす影響</strong><br>
-    小林&ensp;智之・及川&ensp;昌典<br>
-    心理学研究&ensp;86(5)&ensp;467-473&ensp;2015年12月</p>
-    
-    <p><strong>社会的説得の補償効果―自己効力感形成に対する４つの情報源モデル―</strong><br>
-    小林&ensp;智之<br>
-    ソーシャル・モチベーション研究&ensp;8&ensp;26-35&ensp;2015年8月</p>
-    
-    <p><strong>メタステレオタイプが外集団に対する否定的な態度に及ぼす影響―集団相互協調性による調整―</strong><br>
-    小林&ensp;智之<br>
-    同志社大学&ensp;2014年3月</p>
-  </div>
-
-
-
-  <div class='block2'>
-    <h2 class='news'>社会貢献活動
-    </h2>
-    <p>2018年6月6日　福島県庁出前講座「地域の愛着と避難」</p>
-    <p>2018年6月12日　福島県いわき市保健師等スキルアップ研修会「プロジェクトをまわす」</p>
-    <p>2018年8月29日　福島県県北保健福祉事務所出前講座「地域診断の方法：PCM手法」</p>
-  </div>
-
-
-
-  <div class='block2'>
-    <h2 class='news'>国際学会の発表
-    </h2>
-    <p>　Yoshida, K., Kobayashi, T., Goto, A., Takebayashi, Y., Kumagai, A., Yasui, K., Kuroda, Y., Suenaga, K., Komiya, H., & Murakami, M.&ensp;(2018).&ensp;Improving risk communication skills for public health nurses after the Fukushima disaster.&ensp;The 21st East Asian Forum of Nursing Scholars & 11th International Nursing Conference</p>
-    <p>◎Kobayashi, T. & Oikawa, M.&ensp;(2017).&ensp;Tragic encounters of the third kind: How negative meta-stereotype leads to infra-humanization.&ensp;The 18th annual meeting for Society for Personality and Social Psychology</p>
-    <p>◎Kobayashi, T. & Oikawa, M.&ensp;(2016).&ensp;Where ignorance is bliss: Effect of intergroup contact on meta-stereotype.&ensp;The 17th annual meeting for Society for Personality and Social Psychology</p>
-    <p>◎Kobayashi, T. & Oikawa, M.&ensp;(2015).&ensp;The liberals’ dilemma: Effects of negative meta-stereotypes on intergroup anxiety.&ensp;The 31th International Congress of Psychology</p>
-    <p>◎Kobayashi, T. & Oikawa, M.&ensp;(2015).&ensp;Reflecting and deflecting meta-stereotypes: The moderating role of group-interdependence.&ensp;The 16th annual meeting for Society for Personality and Social Psychology</p>
-    <p>◎Kobayashi, T.&ensp;(2013).&ensp;Effects of reminders of low status on out-group favoritism.&ensp;The 14th annual meeting for Society for Personality and Social Psychology</p>
-    <p>◎Kobayashi, T.&ensp;(2012).&ensp;Meta-stereotype, other-stereotype, and self-stereotype.&ensp;2nd Doshisha-Chung-Ang Symposium of Psychological Science 2012</p>
-  </div>
-
-
-
-<style>
-  @import url(https://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
-</style>
-<style>
-  @import url(https://fonts.googleapis.com/css?family=Lato:400,900);
-</style>
-  <div class='block2'>
-    <h2 class='news'>国内学会等の発表
-    </h2>
-    <p>　村上道夫・小林智之・吉田和樹・竹林由武・小宮ひろみ・末永カツ子・後藤あや・熊谷敦史・黒田佑次郎・安井清孝&ensp;(2018).&ensp;地域医療におけるリスクコミュニケーション: 災害関連健康リスクにおける協働知の構築&ensp;第31回日本リスク研究学会シンポジウム&ensp; （シンポジウム, 東京, 2018年6月26日）</p>
-    <p>　村上道夫・小林智之・吉田和樹・竹林由武・小宮ひろみ・末永カツ子・後藤あや・熊谷敦史・黒田佑次郎・安井清孝&ensp;(2018).&ensp;災害関連健康リスクにおける協働知の構築&ensp;リスクコミュニケーションのモデル形成事業 3 大学合同シンポジウム&ensp;（シンポジウム, 東京, 2018年5月29日）</p>
-    <p>　嵯峨嘉子・山野則子・所道彦・駒田安紀・小林智之&ensp;(2017).&ensp;大阪府 子どもの生活に関する実態調査から見える子どもの貧困&ensp;貧困研究会第10回研究大会&ensp;（口頭）</p>
-    <p>◎小林智之&ensp;(2017).&ensp;集団間葛藤におけるネガティブなメタステレオタイプの働き&ensp;日本心理学会第81回大会&ensp;（小講演）</p>
-    <p>◎小林智之・及川昌典&ensp;(2015).&ensp;ネガティブなメタステレオタイプが自己肯定感に及ぼす影響&ensp;日本心理学会第79回大会&ensp;（ポスター）</p>
-    <p>◎小林智之・及川昌典&ensp;(2014).&ensp;ジェンダーメタステレオタイプのネガティブ性の比較検討&ensp;日本心理学会第78回大会&ensp;（ポスター）</p>
-    <p>◎小林智之・及川昌典&ensp;(2013).&ensp;外集団の重要性がネガティブなメタステレオタイプの働きへ及ぼす影響&ensp;日本社会心理学会第54回大会&ensp;（口頭）</p>
-    <p>◎小林智之・及川昌典&ensp;(2013).&ensp;メタステレオタイプが集団間相互作用へ及ぼす影響&ensp;日本心理学会第77回大会&ensp;（ポスター）</p>
-    <p>◎小林智之・及川昌典&ensp;(2013).&ensp;ステータス差の認識による内外集団びいき発生の検討&ensp;第11回関西動機づけ研究会&ensp;（口頭）</p>
-    <p>◎小林智之・及川昌典&ensp;(2012).&ensp;メタステレオタイプ、自己ステレオタイプ、他者ステレオタイプの関係&ensp;日本社会心理学会第53回大会&ensp;（口頭）</p>
-    <p>◎小林智之&ensp;(2012).&ensp;集団間ステータス差の認識が内外集団びいきに及ぼす影響&ensp;日本心理学会第76回大会&ensp;（ポスター）</p>
-  </div>
-
-
-
-  <div class='block2'>
-    <h2 class='news'>報告書
-    </h2>
-    <p>　大阪府　子どもの生活に関する実態調査&ensp;大阪府立大学　全38報</p>
-   </div>
-
-
+<p>Reseaarch Mapにリンクします。<br> <a href="https://researchmap.jp/tomokoba/" class="uri">https://researchmap.jp/tomokoba/</a></p>
 
 <footer>
   <p align="right">Copyright &copy; 2018 Tomoyuki Kobayashi　　　</p>
@@ -442,6 +417,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

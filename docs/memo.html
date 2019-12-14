@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -88,7 +87,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -237,6 +235,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -265,6 +264,12 @@ $(document).ready(function () {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -347,10 +352,13 @@ div.tocify {
   <a href="history.html">ABOUT ME</a>
 </li>
 <li>
-  <a href="report.html">ACHIVEMENT</a>
+  <a href="https://tobayash.github.io/tomokobablog/">ACHIVEMENT</a>
 </li>
 <li>
   <a href="memo.html">PORTFOLIO</a>
+</li>
+<li>
+  <a href="https://tobayash.github.io/tomokobablog/">BLOG</a>
 </li>
 <li>
   <a href="news.html">RECORD</a>
@@ -409,12 +417,12 @@ h1 {
 </style>
 <p>ここにメモを残していく（自分用）。<br> <br> <br></p>
 <hr />
-<div id="section" class="section level1">
+<div id="分析手法" class="section level1">
 <h1>分析手法</h1>
-<div id="section-1" class="section level2">
+<div id="階層的重回帰分析" class="section level2">
 <h2>階層的重回帰分析</h2>
 <p>　階層的重回帰分析は、ステップ１からステップ２へとステップごとに関心のある変数を投入していき、分散説明率が統計的に有意に増加することを検定することで、その変数の重要性を分析する手法である。<br> 　たとえば、大事な人に会うときや人前で話をするとき、誰しも不安を感じやすい（状態不安という）。そのときの不安の程度は、協調性や誠実さといったパーソナリティ特性によることが考えられるが、研究として関心があるのはこれらの交互作用効果だとする（“誠実さが高く協調性が高い人は周囲に合わせようとするため、不安を感じやすい”とか）。その場合は、ステップ１では説明変数として“協調性”と“誠実さ”を入れ、ステップ２ではさらに“協調性”と“誠実さ”の交互作用項を入れて分析する。ただし、各変数と交互作用項の相関による多重共線性の問題が考えられるので中心化処理（平均値を引く）を忘れずに行う。<br></p>
-<div id="section-2" class="section level3">
+<div id="分析" class="section level3">
 <h3>分析</h3>
 <p>　Rで分析する場合には以下のコードを用いる。<br> 　</p>
 <pre class="r"><code>data &lt;- XXX     　　　　　　　 #分析したいデータを入れる
@@ -535,7 +543,7 @@ summary(step2)</code></pre>
 <p><strong>結果の書き方の例</strong><br></p>
 <p>　状態不安得点を応答変数とした階層的重回帰分析を行った。その結果、ステップ1（<em>R<sup>2</sup>adj</em> = .27, <em>F</em> (3,227) = 29.47, <em>p</em> &lt; .05）から交互作用項を含んだステップ2（<em>R<sup>2</sup>adj</em> = .28, <em>F</em> (4,226) = 23.40, <em>p</em> &lt; .05）で分散説明率の有意な増加が見られた（<em>ΔR<sup>2</sup></em> = .07, <em>ΔF</em> (1,226) = 4.03, <em>p</em> &lt; .05）。誠実さ得点と協調性得点の交互作用効果が有意であった（<em>b*</em> = 0.002, <em>t</em> (226) = 2.01, <em>p</em> &lt; .05）。誠実さ得点の主効果（<em>b*</em> = -0.06, <em>t</em> (226) = 1.72, <em>ns.</em>）は有意ではなかった。協調性得点の主効果が有意であった（<em>b*</em> = -0.08, <em>t</em> (226) = 2.10, <em>p</em> &lt; .05）。共変量の神経症傾向得点の主効果が有意であった（<em>b*</em> = 0.23, <em>t</em> (226) = 8.40, <em>p</em> &lt; .05）。</p>
 </div>
-<div id="section-3" class="section level3">
+<div id="単純傾斜分析" class="section level3">
 <h3>単純傾斜分析</h3>
 <p>　交互作用効果が有意であった場合、下位検定として単純傾斜分析を行う。<br> 　コードは以下の通り。 　 　</p>
 <pre class="r"><code>#下位検定
@@ -608,7 +616,7 @@ summary(simpleslope2)</code></pre>
 <hr />
 </div>
 </div>
-<div id="section-4" class="section level2">
+<div id="探索的因子分析" class="section level2">
 <h2>探索的因子分析</h2>
 <p>　科学において測定は重要である。心理学においては、目に見えない心の働きを研究するうえで様々な質問項目が利用されてきており、それがお家芸にもなっている。複数からなる質問項目がいったいどのような概念を表しているのかは関心の高いところであるが、探索的因子分析は項目への回答に影響した因子の存在を統計的に抽出する手法である。<br> <br></p>
 <p>　Rで分析する場合には以下のコードを用いる。<br></p>
@@ -627,7 +635,7 @@ VSS(va,plot=FALSE)　#推定される最小の因子数（最小平均偏相関�
 fa.result &lt;- fa(va, nfactors = 4, fm = &quot;minres&quot;, rotate = &quot;promax&quot;)　#たとえば因子数を4として、最小二乗法のプロマックス、どーん!
 print(fa.result, sort = T, digit = 3, cut=0.3) #結果の表示。ソートかけて、桁数は3、0.3以下の結果はカット</code></pre>
 <p>　上のコードでは、回転法はプロマックス回転、初期解の算出には最小二乗法を用いている。<br> 　回転法（rotate=）については直交回転と斜交回転を選択できる。直交回転なら“varimax”、斜交回転なら“promax”が使えるが、その他の回転法も直交回転と斜交回転のそれぞれ用意されている。<br> 　初期解の算出（fm=）には、最小二乗法なら“minres”、最尤法なら“ml”、主因子法なら“pa”が使える。他にもあり。<br></p>
-<div id="section-5" class="section level3">
+<div id="因子数の選定" class="section level3">
 <h3>因子数の選定</h3>
 <p>　 　因子分析をするにあたってはまず因子数の選定が必要になってくる。基本的には理論的な説明が可能であることが大切だろうが、統計的な算出方法もある。有名なのはスクリープロットでかくんとなってるところを基準に見るやつ。<br> 　その他、平行分析と最小平均偏相関という手法がある（どちらもpsychoパッケージに入ってる）。数学的なことはわからないけど、平行分析は因子数として選定され得る数を大きめに出す。一方、最小平均偏相関は因子数を倹約的に推定する。そのため、因子数はだいたい最小平均偏相関の値から平行分析の値までの間で分析していって、理論的な説明や因子分析のモデル適合度を見ながら最終的な因子数を決めるのが良さそう。<br> 　 　データセットとしてpsychパッケージに入っている“epi.bfi”を使用する。このデータセットにはアイゼンク性格検査（EPI）とBig 5尺度、ベック抑うつ性尺度、特性‐状態不安の得点が231人分入っている。<br></p>
 <pre class="r"><code>library(psych) #psychパッケージを使う
@@ -656,26 +664,26 @@ va&lt;-epi.bfi #因子分析にかける変数を取り出す。ここではす�
 ## Sample Size adjusted BIC achieves a minimum of  -3.74  with  8  factors
 ## 
 ## Statistics by number of factors 
-##   vss1 vss2   map dof   chisq     prob sqresid  fit RMSEA BIC  SABIC
-## 1 0.53 0.00 0.098  65 1253.38 2.0e-219    14.0 0.53 0.286 900 1105.6
-## 2 0.70 0.76 0.076  53  704.54 1.2e-114     7.0 0.76 0.235 416  584.1
-## 3 0.73 0.86 0.050  42  354.38  4.8e-51     3.1 0.90 0.183 126  258.9
-## 4 0.71 0.86 0.065  32  262.74  4.6e-38     2.5 0.92 0.181  89  190.0
-## 5 0.65 0.84 0.088  23  142.11  3.8e-19     2.1 0.93 0.153  17   89.8
-## 6 0.63 0.85 0.116  15   58.85  4.0e-07     1.8 0.94 0.116 -23   24.8
-## 7 0.66 0.83 0.147   8   21.71  5.5e-03     1.7 0.94 0.089 -22    3.5
-## 8 0.65 0.81 0.218   2    0.81  6.7e-01     1.3 0.96 0.000 -10   -3.7
-##   complex  eChisq    SRMR eCRMS eBIC
-## 1     1.0 1.5e+03 0.20267 0.222 1126
-## 2     1.1 4.9e+02 0.11719 0.142  206
-## 3     1.3 5.6e+01 0.03932 0.054 -173
-## 4     1.5 2.8e+01 0.02811 0.044 -146
-## 5     1.7 1.4e+01 0.01940 0.036 -112
-## 6     1.7 3.3e+00 0.00952 0.022  -78
-## 7     1.8 7.7e-01 0.00461 0.014  -43
-## 8     1.7 1.5e-02 0.00065 0.004  -11</code></pre>
+##   vss1 vss2   map dof   chisq     prob sqresid  fit RMSEA BIC  SABIC complex
+## 1 0.53 0.00 0.098  65 1253.38 2.0e-219    14.0 0.53 0.286 900 1105.6     1.0
+## 2 0.70 0.76 0.076  53  704.54 1.2e-114     7.0 0.76 0.235 416  584.1     1.1
+## 3 0.73 0.86 0.050  42  354.38  4.8e-51     3.1 0.90 0.183 126  258.9     1.3
+## 4 0.71 0.86 0.065  32  262.74  4.6e-38     2.5 0.92 0.181  89  190.0     1.5
+## 5 0.65 0.84 0.088  23  142.11  3.8e-19     2.1 0.93 0.153  17   89.8     1.7
+## 6 0.63 0.85 0.116  15   58.85  4.0e-07     1.8 0.94 0.116 -23   24.8     1.7
+## 7 0.66 0.83 0.147   8   21.71  5.5e-03     1.7 0.94 0.089 -22    3.5     1.8
+## 8 0.65 0.81 0.218   2    0.81  6.7e-01     1.3 0.96 0.000 -10   -3.7     1.7
+##    eChisq    SRMR eCRMS eBIC
+## 1 1.5e+03 0.20267 0.222 1126
+## 2 4.9e+02 0.11719 0.142  206
+## 3 5.6e+01 0.03932 0.054 -173
+## 4 2.8e+01 0.02811 0.044 -146
+## 5 1.4e+01 0.01940 0.036 -112
+## 6 3.3e+00 0.00952 0.022  -78
+## 7 7.7e-01 0.00461 0.014  -43
+## 8 1.5e-02 0.00065 0.004  -11</code></pre>
 </div>
-<div id="section-6" class="section level3">
+<div id="探索的因子分析-1" class="section level3">
 <h3>探索的因子分析</h3>
 <p>　因子数は３因子が良さそう。</p>
 <pre class="r"><code>fa.result &lt;- fa(va, nfactors = 3, fm = &quot;minres&quot;, rotate = &quot;promax&quot;)　#因子数を3として、最小二乗法のプロマックス、どーん!
@@ -732,7 +740,7 @@ print(fa.result, sort = T, digit = 3, cut=0.3) #結果の表示。ソートか�
 <hr />
 </div>
 </div>
-<div id="section-7" class="section level2">
+<div id="クラスタ分析" class="section level2">
 <h2>クラスタ分析</h2>
 <p>　以下のコードを使う。 　</p>
 <pre class="r"><code>clust &lt;- XXX  #分析したいデータを入れる
@@ -755,7 +763,7 @@ table(groups)
 
 clust$groups&lt;-groups
 aggregate(.~groups, data=clust, FUN=mean)</code></pre>
-<div id="section-8" class="section level3">
+<div id="クラスタ数の分析" class="section level3">
 <h3>クラスタ数の分析</h3>
 <p>　クラスタ数を選定する方法として、The Calinski-Harabasz indexがある。<br> 　クラスター数ごとに、クラスタ内の距離の2乗の合計値（within sum of squares; WSS）を算出し、その曲線のエルボーを探す。クラスタ数が増加すると、total WSSが減少するのだが、理想的なクラスター数を超えるとWSSの減少割合が落ちるという見込みからエルボー探しをする。<br> 　また、Calinski-Harabasz基準とは、WSSに対するクラスター間の分散（データセットの重心からすべてのクラスターの重心の分散）の割合である。</p>
 <pre class="r"><code>library(psych)
@@ -763,7 +771,7 @@ clust&lt;-epi.bfi[,6:10]</code></pre>
 <p><img src="memo_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>　エルボー…４…かな？</p>
 </div>
-<div id="section-9" class="section level3">
+<div id="クラスタ分析-1" class="section level3">
 <h3>クラスタ分析</h3>
 <pre class="r"><code># 距離の計算
 uclust &lt;-  dist(clust)^2   #ユークリッド距離の平方
@@ -856,7 +864,7 @@ ggplot(meltd,aes(x=groups, y=per, fill=variable))+
 </div>
 <div id="ggplot" class="section level1">
 <h1>ggplot</h1>
-<div id="section-10" class="section level2">
+<div id="ロジスティック回帰分析のグラフ" class="section level2">
 <h2>ロジスティック回帰分析のグラフ</h2>
 <p>　なんかいい感じのグラフ描きたいなって思いますよね。<br> 　ローデータがぶわーってプロットされてて、回帰直線・曲線がシューン！なってるやつ。<br> 　下のコードを使います。 　</p>
 <pre class="r"><code>library(ggplot2)
@@ -874,7 +882,7 @@ ggplot(data,                                                  　　#データ�
 <p>　すると、このようなものができます。<br></p>
 <p><img src="memo_files/figure-html/unnamed-chunk-20-1.png" width="672" /> 　 　<br> 　なんか違うけど、データがそうならちゃんとS字になるはずなんだ・・・</p>
 </div>
-<div id="section-11" class="section level2">
+<div id="軸の設定" class="section level2">
 <h2>軸の設定</h2>
 <ul>
 <li>ggplotでグラフを作成すると、x軸から棒グラフなんかが浮いてしまう（ラピュタ）。ラピュタを無くすならscale_y_continuous(expand = c(0,0))を加える<br></li>
@@ -885,7 +893,7 @@ ggplot(data,                                                  　　#データ�
 </div>
 <div id="rmarkdown" class="section level1">
 <h1>Rmarkdown</h1>
-<div id="yaml" class="section level2">
+<div id="yamlヘッダ" class="section level2">
 <h2>yamlヘッダ</h2>
 <ul>
 <li>Rmarkdownでドキュメントを作るときの全体設定<br></li>
